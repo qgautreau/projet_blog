@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load fontawesome %}
+
+{% block content %}
+
+<div class="post-detail">
+    <h2>{{post.title}}</h2>
+    <h3>Date de creation: [{{post.creation_date}}]</h3>
+    <h4>{{post.category}}</h4>
+        <div class="p">
+            {{post.body|safe}}
+        </div>
+    {% if user.is_authenticated and perms.post.change_post %}
+        <a class="btn btn-info" href="{% url 'post-edit' post.slug %}" role="button">{% fontawesome_icon 'pencil' %} edit this post</a>
+
+        {% if user.is_authenticated and user.is_superuser %}
+            <a class="btn btn-danger" href="{% url 'post-delete' post.slug %}" role="button">{% fontawesome_icon 'trash' %} Delete this post</a>
+        {% endif %}
+    {% endif %}
+
+</div>
+{% endblock %}

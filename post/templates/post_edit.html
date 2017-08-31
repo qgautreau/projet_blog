@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<form class="formboots" action="{% url 'post-edit' post.slug%}" method="post">
+
+    {% csrf_token %}
+    {% bootstrap_form form %}
+
+    <button class="btn btn-primary" type="submit" name="button">Update</button>
+</form>
+{% endblock %}
+
+{% block extra-jquery %}
+    {{ form.media }}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>List des Articles</h1>
+
+<div class="post-list">
+
+    <form class="categories" action="{% url 'post-list'%}" method="get">
+        <label for="category">Categories: </label>
+        <select class="category" name="category">
+            <option value="0">all</option>
+
+            {% for category in categories %}
+            <option value="{{category.id}}" {% if category.id == cat %}selected{% endif %}>{{category.label}}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" name="">Filtrer</button>
+    </form>
+
+    <!-- <autoslug>{{post.title}}</autoslug> -->
+    <ul>
+        {% for post in posts %}
+        <li>
+            [{{post.creation_date}}] {{post.category}}
+            <a href="{% url 'post-detail' post.slug %}">: {{post.title}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+    <div class="pagination">
+        <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page={{ posts.previous_page_number }}&category={{cat}}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+        </span> {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}&category={{cat}}">next</a> {% endif %}
+        </span>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -38,7 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'post'
+
+    'sass_processor',
+    'djangobower',
+    'bootstrap3',
+    'fontawesome',
+    'ckeditor',
+
+    'post',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -109,14 +117,43 @@ LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'CET'
 
-USE_I18N = True
-
-USE_L10N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/login"
+
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static/'
+# CKEDITOR_JQUERY_URL = "/static/bower_components/jquery/dist/jquery.js"
+
+
+STATICFILES_FINDERS = [
+   'django.contrib.staticfiles.finders.FileSystemFinder',
+   'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+   'sass_processor.finders.CssFinder',
+   'djangobower.finders.BowerFinder',
+]
+
+BOWER_INSTALLED_APPS = (
+   'jquery',
+   'bootstrap-sass',
+   'bootstrap',
+   'fontawesome'
+)
+
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, "static")
+
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "post", "static", "sass"),
+]
+
+
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    os.path.join(BASE_DIR, "post", "static", "sass"),
+    os.path.join(BASE_DIR, "static/bower_components/bootstrap-sass/assets/stylesheets"),
+]

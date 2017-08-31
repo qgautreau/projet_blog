@@ -1,2 +1,4 @@
 Django==1.11
-
+django-autoslug==1.9.3
+django-extensions==1.7.9
+pygraphviz==1.3.1

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="login-form">
+    <form class="log-form" action="{% url 'login'%}?next={{request.META.HTTP_REFERER}}" method="post">
+        {{ form }}
+        {% csrf_token%}
+        <button type="submit" name="button">login</button>
+    </form>
+</div>
+{% endblock %}

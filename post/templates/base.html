@@ -1,12 +1,64 @@
+{% load sass_tags %}
+{% load static %}
+{% load fontawesome %}
+
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- <link rel="stylesheet" href="{% static 'bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss' %}"> -->
+    {% fontawesome_stylesheet %}
+
+
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+    <link href="{% sass_src '_base.scss' %}" rel="stylesheet" type="text/css" />
+
+    <link async href="http://fonts.googleapis.com/css?family=Passero%20One" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
+    <link async href="http://fonts.googleapis.com/css?family=Syncopate" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
+
+    <link async href="http://fonts.googleapis.com/css?family=Aladin" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
+    <link async href="http://fonts.googleapis.com/css?family=Passero%20One" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
+
     <title>Titre de la page</title>
-  </head>
-  <body>
-      {% block content %}
-      {% endblock %}
-  </body>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'home'%}">Home</a></li>
+                <li><a href="{% url 'post-list'%}">liste des posts</a></li>
+
+                {% if user.is_authenticated and perms.post.add_post %}
+                    <li><a href="{% url 'post-create'%}">create a post</a></li>
+                {% endif %}
+
+
+                {% if user.is_authenticated %}
+                    <li class="navbar-right"><a href="#"> {% fontawesome_icon 'user-circle-o' %} {{ request.user.username }}</a></li>
+                    <li class="navbar-right"><a id="logout" href="{% url 'logout'%}">Logout</a></li>
+                    {% else %}
+                    <li class="navbar-right"><a id="login" href="{% url 'login'%}">Login</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </nav>
+    {% block content %} {% endblock %}
+    <script type="text/javascript" src='{% static 'jquery/dist/jquery.js' %}'></script>
+    <script type="text/javascript" src='{% static 'bower_components/bootstrap-sass/assets/javascripts/bootstrap.js' %}'></script>
+
+    {% block extra-jquery %}
+    {% endblock %}
+
+</body>
+
 </html>
